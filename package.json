@@ -8,10 +8,14 @@
     "@testing-library/user-event": "^7.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "socket.io": "^2.3.0",
+    "uuid": "^7.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"npm run react\" \"npm run server\"",
+    "react": "react-scripts start",
+    "server": "nodemon src/server/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -30,5 +34,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0",
+    "nodemon": "^2.0.3"
   }
 }
