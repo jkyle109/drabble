@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Component }from 'react'
 import { VERIFY_USER } from '../Events.js';
 
-class Login extends React.Component {
+class Login extends Component {
     constructor(props) {
         super(props)
 
@@ -22,6 +22,7 @@ class Login extends React.Component {
         }
     }
 
+    //Replace with a window alert component later
     setError(message){
         this.setState({
             error: message
@@ -30,8 +31,9 @@ class Login extends React.Component {
     }
 
     handleChange(e){
+        const username = e.target.value
         this.setState({
-            username: e.target.value
+            username: username
         })
     }
 

@@ -1,11 +1,14 @@
 const io = require('./index.js').io; 
-const { USER_CONNECTED, USER_DISCONNECTED, VERIFY_USER, LOGOUT} = require('../Events.js');
+const { USER_CONNECTED, USER_DISCONNECTED, VERIFY_USER, LOGOUT, GLOBAL_CHAT, MESSAGE_SENT, MESSAGE_RECIEVED, } = require('../Events.js');
 //const { useCallback } = require('react');
 const create = require('../Factories.js');
 
 
 // Init User List
 let userList = {};
+
+//
+let GlobalChat = create.chat({name: "Global-Chat"})
 
 // Where server listens for events and emits changes based on those events.
 module.exports = function(socket){
@@ -19,16 +22,19 @@ module.exports = function(socket){
             callback({isUser: true, user: null});
             console.log("Username taken.")
         }
-        else
-            callback({ isUser: false, user: create.user({name}) });
-    })
+        else{
+            const user = create.user({name});
+            callback({isUser: false, user});
+        }
+    });
 
     //Add new users
     socket.on(USER_CONNECTED, (user) => {
         userList = addUser(user, userList)
-        socket.user = user;
+        //socket.user = user;
+        GlobalChat.users = addUser(user, GlobalChat.users)
         io.emit(USER_CONNECTED, (userList))
-        console.log("User connected: ", user, "\nCurrent user list: ", userList);
+        console.log("User connected: ", user, "\nCurrent user list: ", userList, "\n", GlobalChat);
     });
 
     socket.on("disconnect", (user) => {
@@ -45,7 +51,13 @@ module.exports = function(socket){
         console.log("User disconnected: ", user, "\nCurrent user list: ", userList);
     });
 
-    
+
+
+    socket.on(MESSAGE_SENT, (message, sender) => {
+        message = create.message({message, sender});
+        GlobalChat.messages.push(message);
+        io.emit(MESSAGE_RECIEVED, (message));
+    });
 }
 
 

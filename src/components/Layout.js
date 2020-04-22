@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import io from 'socket.io-client'
 import { USER_CONNECTED, LOGOUT  } from '../Events.js'
 import Login from "./Login.js"
+import ChatContainer from './ChatContainer.js'
 
 const socketUrl = "http://localhost:3001"
 
@@ -24,7 +25,8 @@ class Layout extends Component {
 
     //Leave page ???
     componentWillUnmount() {
-        this.socket.emit("disconnect", (this.user))
+        //const socket = this.state.socket;
+        //socket.emit("disconnect", (this.user))
     }
 
     //Create a socket connection with server
@@ -64,10 +66,15 @@ class Layout extends Component {
 
     render() {
         const { title } = this.props
+        const user = this.state.user
+        const socket = this.state.socket
         return (
             <div>
                 {title}
-                <Login socket = {this.state.socket} setUser = {this.setUser}/>
+                {user ? 
+                    <ChatContainer socket = {socket} user = {user}/> :
+                    <Login socket = {socket} setUser = {this.setUser}/>
+                }
             </div>
         )
     }

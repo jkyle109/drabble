@@ -28,7 +28,7 @@ const chat = ({messages = [], name = "New Chat", users = []} = {}) => ({
 
 function getTime(){
     const date = new Date(Date.now());
-    return `${date.getHours()}:${("0"+date.getMinutes()).slice(-2)}`;
+    return `${date.getHours()}:${("0"+date.getMinutes()).slice(-2)}:${("0"+date.getSeconds()).slice(-2)}`;
 }
 
 module.exports = {
