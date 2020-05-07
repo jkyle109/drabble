@@ -20,6 +20,10 @@ class ChatContainer extends Component {
         this.addMessage();
     }
 
+    componentDidUpdate(){
+        this.autoScr()
+    }
+    
     //Chat Box with messages
 
     //Chat input
@@ -50,24 +54,31 @@ class ChatContainer extends Component {
     }
 
 
+    autoScr(){
+        this.messageBox.scrollTop = this.messageBox.scrollHeight
+    }
+
 
     render() {
         console.log(this.state.chatMessages)
         const messageBlock = this.state.chatMessages.map(message => (
-            <MessageBox 
+            <MessageBox
                 key = {message.id}
                 message = {message.message}
                 sender = {message.sender}
             />
         ));
 
+
         return (
             <div>
-                <MessageInput 
+                <MessageInput
                     chat = {this.state}
                     sendMessage = {this.sendMessage}
                 />
-                {messageBlock}
+                <div className="messageBox" ref={(ele) => this.messageBox = ele}>
+                    {messageBlock}
+                </div>
             </div>
         )
     }

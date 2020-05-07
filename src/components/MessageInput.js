@@ -30,19 +30,26 @@ class MessageInput extends Component {
                 message: ""
             });
         }
+
+        this.input.focus();
     }
 
     render() {
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
-                    <input 
+                <form onSubmit={this.handleSubmit}> 
+                    <input className="messageInput"
                         type = "text" 
                         value = {this.state.message} 
-                        placeholder = {this.props.chat.name} 
+                        placeholder = "Type here to chat!" 
                         onChange = {this.handleChange}
+                        ref={(ele) => this.input = ele}
                     />
-                    <input type = "submit" value = "Send"/>
+                    <input 
+                        type = "submit" 
+                        value = "Send"
+                        className="messageSend"
+                        />
                 </form>
             </div>
         )

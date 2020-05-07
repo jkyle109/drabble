@@ -13,7 +13,14 @@ class MessageBox extends Component {
     render() {
         return (
             <div>
-                {this.props.sender.name + " : " + this.props.message}
+                {/* <hr className="messageBreak"/> */}
+                <span className="username">
+                    {this.props.sender.name}
+                </span>
+                <span className="message">
+                    {": " + this.props.message}
+                </span>
+                
             </div>
         )
     }
