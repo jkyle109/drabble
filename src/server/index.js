@@ -8,8 +8,7 @@ const PORT = process.env.PORT || 3001;
 
 const SocketManager = require('./SocketManager');
 
-appServer.use(express.static(__dirname + '/../../build'))
-console.log(__dirname)
+app.use(express.static(__dirname + '/../../build'))
 
 io.on("connect", SocketManager)
 
