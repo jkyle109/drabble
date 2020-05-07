@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "express": "^4.17.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
@@ -13,7 +14,8 @@
     "uuid": "^7.0.3"
   },
   "scripts": {
-    "start": "concurrently \"npm run react\" \"npm run server\"",
+    "start": "node src/server/index.js",
+    "dev": "concurrently \"npm run react\" \"npm run server\"",
     "react": "react-scripts start",
     "server": "nodemon src/server/index.js",
     "build": "react-scripts build",
