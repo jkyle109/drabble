@@ -1,11 +1,14 @@
 const io = require('./index.js').io; 
-const { USER_CONNECTED, USER_DISCONNECTED, VERIFY_USER, LOGOUT, GLOBAL_CHAT, MESSAGE_SENT, MESSAGE_RECIEVED, } = require('../Events.js');
+const { USER_CONNECTED, USER_DISCONNECTED, VERIFY_USER, LOGOUT, MESSAGE_SENT, MESSAGE_RECIEVED, } = require('../Events.js');
 //const { useCallback } = require('react');
 const create = require('../Factories.js');
 
 
 // Init User List
 let userList = {};
+
+// Server user
+const server = create.user({name: "server"});
 
 //
 let GlobalChat = create.chat({name: "Global-Chat"})
@@ -33,7 +36,12 @@ module.exports = function(socket){
         userList = addUser(user, userList)
         //socket.user = user;
         GlobalChat.users = addUser(user, GlobalChat.users)
-        io.emit(USER_CONNECTED, (userList))
+        //io.emit(USER_CONNECTED, (userList))
+
+        let message = user.name + " has joined!"
+        message = create.message({message , sender: server});
+        GlobalChat.messages.push(message);
+        io.emit(MESSAGE_RECIEVED, (message));
         console.log("User connected: ", user, "\nCurrent user list: ", userList, "\n", GlobalChat);
     });
 
@@ -99,5 +107,5 @@ function removeUser(user, list){
  * @param {*} userList 
  */
 function isUser(name, userList){
-    return name in userList;
+    return name in userList || name === "server";
 }

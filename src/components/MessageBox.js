@@ -11,8 +11,10 @@ class MessageBox extends Component {
     //Need messages
 
     render() {
+        let highlight = this.props.message.includes("@"+this.props.user.name)
+
         return (
-            <div>
+        <div style={{backgroundColor: highlight ? "rgb(25, 9, 42)" : "none"}}>
                 {/* <hr className="messageBreak"/> */}
                 <span className="username">
                     {this.props.sender.name}

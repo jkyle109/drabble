@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import MessageInput from './MessageInput.js'
 import { MESSAGE_SENT, MESSAGE_RECIEVED } from '../Events.js'
 import MessageBox from './MessageBox.js'
+import ServerMessage from './ServerMessage.js';
 
 class ChatContainer extends Component {
     constructor(props) {
@@ -16,7 +17,7 @@ class ChatContainer extends Component {
         this.addMessage = this.addMessage.bind(this);
     }
     
-    componentWillMount(){
+    componentDidMount(){
         this.addMessage();
     }
 
@@ -44,29 +45,36 @@ class ChatContainer extends Component {
     addMessage(){
         const socket = this.props.socket;
         socket.on(MESSAGE_RECIEVED, (message) =>{
-            //console.log(MESSAGE_RECIEVED, " : ", message);
             const newList = this.state.chatMessages
             newList.push(message);
             this.setState({
                 chatMessages: newList
             })
+            console.log(this.state.chatMessages)
         });
     }
 
-
+    //Change scroll 
     autoScr(){
         this.messageBox.scrollTop = this.messageBox.scrollHeight
     }
 
 
     render() {
-        console.log(this.state.chatMessages)
         const messageBlock = this.state.chatMessages.map(message => (
+            message.sender.name === 'server' ?
+            <ServerMessage
+                key = {message.id}
+                message = {message.message}
+            /> :
             <MessageBox
                 key = {message.id}
                 message = {message.message}
                 sender = {message.sender}
-            />
+                user = {this.props.user}
+            /> 
+
+
         ));
 
 

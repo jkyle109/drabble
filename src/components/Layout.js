@@ -3,8 +3,12 @@ import io from 'socket.io-client'
 import { USER_CONNECTED, LOGOUT  } from '../Events.js'
 import Login from "./Login.js"
 import ChatContainer from './ChatContainer.js'
+import NavBar from './NavBar.js';
+import WhiteBoard from './WhiteBoard.js';
+import ToolBar from './ToolBar.js';
 
 const socketUrl = "/"
+//const socketUrl = "http://localhost:3001"
 
 class Layout extends Component {
     constructor(props){
@@ -19,7 +23,7 @@ class Layout extends Component {
     }
 
     //Initialises socket
-    componentWillMount() {
+    componentDidMount() {
         this.initSocket()
     }
 
@@ -65,14 +69,17 @@ class Layout extends Component {
 
 
     render() {
-        const { title } = this.props
         const user = this.state.user
         const socket = this.state.socket
         return (
             <div>
-                {title}
+                <NavBar />
                 {user ? 
-                    <ChatContainer socket = {socket} user = {user}/> :
+                    <div>
+                        <WhiteBoard />
+                        <ToolBar />
+                        <ChatContainer socket = {socket} user = {user}/>
+                    </div> :
                     <Login socket = {socket} setUser = {this.setUser}/>
                 }
             </div>
