@@ -5,15 +5,13 @@ body{
 /* Message box that scrolls with messages. */
 .messageBox{
     position: absolute;
-    right: 0px;
+    right: 2px;
     top: 40px;
-    bottom: 40px;
-    width: 300px;
+    bottom: 50px;
+    width: 298px;
     overflow-y: auto;
     overflow-wrap: break-word;
-    border: 1px solid black;
-    border-top: 0.5px solid black;
-    border-bottom: 0.5px solid black;
+    border: 0.5px solid black;
     background-color:rgb(22, 22, 22);
     font-family: "Comic Sans MS", cursive, sans-serif;
 }
@@ -29,6 +27,14 @@ body{
     color: white;
 }
 
+/* Server Message */
+.serverMessage{
+    position: relative;
+    color: white;
+    text-align: center;
+    background-color: rgb(25, 9, 42);
+}
+
 /* Bar between chat messages. */
 .messageBreak{
     background-color: white;
@@ -42,29 +48,118 @@ body{
 .messageInput{
     position: absolute;
     right: 51px;
-    bottom: 8px;
-    width: 245px;
-    height: 28px;
+    bottom: 2px;
+    width: 244px;
+    height: 44px;
     padding-left: 5px;
     color: white;
     background-color:rgb(22, 22, 22);
     font-family: "Comic Sans MS", cursive, sans-serif;
     border: 0.5px solid black;
+    outline-color: purple;
 }
 
-/* The send butto to send a message. */
+/* The send button to send a message. */
 .messageSend{
     position: absolute;
-    right: 0px;
-    bottom: 8px;
-    width: 50px;
-    height: 31px;
+    right: 2px;
+    bottom: 2px;
+    width: 48px;
+    height: 47px;
     z-index: -1;
     color: white;
     background-color:rgb(22, 22, 22);
     font-family: "Comic Sans MS", cursive, sans-serif;
     border: 0.5px solid black;
+    outline-color: purple;
 }
+
+/* Login Form */
+.loginForm{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginForm>form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Login Text */
+.loginText{
+    color: white;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 30px;
+    margin-top: -86px;
+}
+
+/* User login  */
+.loginUser{
+    color: white;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    background-color:rgb(22, 22, 22);
+    outline-color: purple;
+    border: 0.5px solid black;
+    text-align: center;
+    margin: 20px 0px;
+    font-size: 26px;
+    width: 200px;
+    height: 50px;
+}
+
+/* Login Submit */
+.loginSubmit{
+    align-self: right;
+    color: white;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    border: 0.5px solid black;
+    background-color:rgb(22, 22, 22);
+    font-size: 30px;
+    outline-color: purple;
+}
+
+/* Nav Bar */
+.navBar{
+    position: absolute;
+    height: 38px;
+    left: 2px;
+    right: 2px;
+    top: 0;
+    border: 0.5px solid black;
+    background-color:rgb(22, 22, 22);
+}
+
+/* White Board */
+.whiteBoard{
+    position: absolute;
+    top: 40px;
+    bottom: 50px;
+    left: 2px;
+    right: 302px;
+    border: 0.5px solid black;
+    background-color:white;
+}
+
+/* Tool Bar */
+.toolBar{
+    position: absolute;
+    bottom: 2px;
+    right: 302px;
+    height: 46px;
+    left: 2px;
+    border: 0.5px solid black;
+    background-color:rgb(22, 22, 22);
+}
+
 
 /* Scroll Bar look */
 ::-webkit-scrollbar{
@@ -77,8 +172,6 @@ body{
     border-radius: 15px;
 }
 
-/* :focus{
 
-} */
 
 /* Make a overall div for chat */
