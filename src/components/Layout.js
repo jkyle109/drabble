@@ -32,7 +32,7 @@ class Layout extends Component {
     }
 
     //Create a socket connection with server
-    initSocket(){
+    initSocket = () => {
         const socket = io(socketUrl)
         
         socket.on("connect", () => {
@@ -42,7 +42,7 @@ class Layout extends Component {
     }
 
     //Set User
-    setUser(user){
+    setUser = (user) => {
         const socket = this.state.socket
         
         socket.emit(USER_CONNECTED, user)
@@ -53,7 +53,7 @@ class Layout extends Component {
     }
 
     //Logout
-    logout(){
+    logout = () => {
         const socket = this.state.socket;
         const user = this.state.user;
 
