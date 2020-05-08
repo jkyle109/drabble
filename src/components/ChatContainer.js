@@ -38,7 +38,7 @@ class ChatContainer extends Component {
         const socket = this.props.socket;
         const user = this.props.user;
         socket.emit(MESSAGE_SENT, message, user);
-        console.log(MESSAGE_SENT, " : ", message);
+        // console.log(MESSAGE_SENT, " : ", message);
     }
 
     //Recieve Message
@@ -50,7 +50,7 @@ class ChatContainer extends Component {
             this.setState({
                 chatMessages: newList
             })
-            console.log(this.state.chatMessages)
+            // console.log(this.state.chatMessages)
         });
     }
 

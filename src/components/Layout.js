@@ -8,7 +8,7 @@ import WhiteBoard from './WhiteBoard.js';
 import ToolBar from './ToolBar.js';
 
 const socketUrl = "/"
-//const socketUrl = "http://localhost:3001"
+// const socketUrl = "http://localhost:3001"
 
 class Layout extends Component {
     constructor(props){
@@ -20,6 +20,7 @@ class Layout extends Component {
         };
 
         this.setUser = this.setUser.bind(this);
+        this.setCanvas = this.setCanvas.bind(this);
     }
 
     //Initialises socket
@@ -71,12 +72,13 @@ class Layout extends Component {
     render() {
         const user = this.state.user
         const socket = this.state.socket
+        
         return (
             <div>
                 <NavBar />
                 {user ? 
                     <div>
-                        <WhiteBoard />
+                        <WhiteBoard socket = {socket}/>
                         <ToolBar />
                         <ChatContainer socket = {socket} user = {user}/>
                     </div> :

@@ -1,5 +1,5 @@
 const io = require('./index.js').io; 
-const { USER_CONNECTED, USER_DISCONNECTED, VERIFY_USER, LOGOUT, MESSAGE_SENT, MESSAGE_RECIEVED, } = require('../Events.js');
+const { USER_CONNECTED, USER_DISCONNECTED, VERIFY_USER, LOGOUT, MESSAGE_SENT, MESSAGE_RECIEVED, LINEDRAWN, } = require('../Events.js');
 //const { useCallback } = require('react');
 const create = require('../Factories.js');
 
@@ -66,6 +66,15 @@ module.exports = function(socket){
         GlobalChat.messages.push(message);
         io.emit(MESSAGE_RECIEVED, (message));
     });
+
+
+
+    // Canvas Events
+    socket.on(LINEDRAWN, (ratio) => {
+        io.emit(LINEDRAWN, ratio);
+    });
+        // Emit line drawn
+    
 }
 
 
