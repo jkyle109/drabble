@@ -18,9 +18,6 @@ class Layout extends Component {
             socket: null,
             user: null,
         };
-
-        this.setUser = this.setUser.bind(this);
-        this.setCanvas = this.setCanvas.bind(this);
     }
 
     //Initialises socket
