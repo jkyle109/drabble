@@ -66,7 +66,6 @@ body{
     bottom: 2px;
     width: 48px;
     height: 47px;
-    z-index: -1;
     color: white;
     background-color:rgb(22, 22, 22);
     font-family: "Comic Sans MS", cursive, sans-serif;
@@ -168,6 +167,72 @@ body{
     left: 2px;
     border: 0.5px solid black;
     background-color:rgb(22, 22, 22);
+
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
+.currentColor{
+    display: inline-flex;
+    width: 35px;
+    height: 35px;
+    margin-right: 15px;
+    margin-left: 20px;
+    border: 0.5px solid white;
+}
+
+.colorGrid{
+    display: flex;
+    flex-wrap: wrap;
+    height: 25px;
+
+    align-items: center;
+    justify-items: center;
+    margin-right: 20px;
+}
+
+.colorBox{
+    display: flex;
+    width: 25px;
+    height: 24px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 0.5px solid white;
+}
+
+.colorClear{
+    position: absolute;
+    right: 20px;
+    width: 50px;
+    height: 29px;
+    color: rgb(22, 22, 22);
+    background-color:white;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    border: 0.5px solid black;
+    outline-color: purple;
+    text-align: center;
+    line-height: 29px;
+}
+
+.outerDot{
+    height: 30px;
+    width: 30px;
+    background-color: #bbbbbb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+.innerDot{
+    position: absolute;
+    background-color: #000000;
+    border-radius: 50%;
+    display: flex;
 }
 
 

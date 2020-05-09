@@ -7,8 +7,6 @@ import ServerMessage from './ServerMessage.js';
 class ChatContainer extends Component {
     constructor(props) {
         super(props)
-        //socket
-        //user
 
         this.state = {
             chatMessages: []
@@ -25,13 +23,6 @@ class ChatContainer extends Component {
         this.autoScr()
     }
     
-    //Chat Box with messages
-
-    //Chat input
-
-    //Typing indicator
-
-    //
 
     //Send Message
     sendMessage(message){

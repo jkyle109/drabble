@@ -31,40 +31,41 @@ module.exports = function(socket){
         }
     });
 
-    //Add new users
+    // Add new users
     socket.on(USER_CONNECTED, (user) => {
-        userList = addUser(user, userList)
-        //socket.user = user;
-        GlobalChat.users = addUser(user, GlobalChat.users)
-        //io.emit(USER_CONNECTED, (userList))
+        userList = addUser(user, userList);
+        GlobalChat.users = addUser(user, GlobalChat.users);
 
+        // Chat User Connect Message
         let message = user.name + " has joined!"
-        message = create.message({message , sender: server});
-        GlobalChat.messages.push(message);
-        io.emit(MESSAGE_RECIEVED, (message));
-        console.log("User connected: ", user, "\nCurrent user list: ", userList, "\n", GlobalChat);
+        sendMessage(message, server)
+        
+        console.log("User connected: ", user, "\nCurrent user list: ", GlobalChat);
     });
 
-    socket.on("disconnect", (user) => {
-        if(user in socket){
-            userList = removeUser(socket.user.name, userList);
-            io.emit(USER_DISCONNECTED, (userList));
-            console.log("User disconnected: ", user, "\nCurrent user list: ", userList);
-        }
+    // Disconnect users
+    socket.on(USER_DISCONNECTED, (user) => {
+        userList = removeUser(user, userList);
+        GlobalChat.users = removeUser(user, GlobalChat.users);
+        
+        // Chat User Disconnet Message
+        let message = user.name + " has left!"
+        sendMessage(message, server)
+
+        console.log("User disconnected: ", user, "\nCurrent user list: ", GlobalChat);
     });
 
     socket.on(LOGOUT, (user) => {
         userList = removeUser(socket.user.name, userList);
-        io.emit(USER_DISCONNECTED, (userList));
+
+
         console.log("User disconnected: ", user, "\nCurrent user list: ", userList);
     });
 
 
 
     socket.on(MESSAGE_SENT, (message, sender) => {
-        message = create.message({message, sender});
-        GlobalChat.messages.push(message);
-        io.emit(MESSAGE_RECIEVED, (message));
+        sendMessage(message, sender)
     });
 
 
@@ -117,4 +118,10 @@ function removeUser(user, list){
  */
 function isUser(name, userList){
     return name in userList || name === "server";
+}
+
+function sendMessage(message, sender){
+    message = create.message({message, sender});
+    GlobalChat.messages.push(message);
+    io.emit(MESSAGE_RECIEVED, (message));
 }

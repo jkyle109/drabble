@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
+import ToolBar from './ToolBar.js';
 const { LINEDRAWN } = require("../Events.js")
+
 
 class WhiteBoard extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
+            penColor: "#000000",
+            lineWidth: 2,
         }
     }
 
@@ -60,9 +64,14 @@ class WhiteBoard extends Component {
         const x2 = ratio.x2 * cw;
         const y2 = ratio.y2 * ch;
 
+        ctx.beginPath();
         ctx.moveTo(x1,y1);
         ctx.lineTo(x2,y2);
+        ctx.lineCap = "round";
+        ctx.strokeStyle = ratio.penColor;
+        ctx.lineWidth = ratio.lineWidth;
         ctx.stroke();
+        ctx.closePath();
     }
 
     handleDraw = () => {
@@ -76,6 +85,8 @@ class WhiteBoard extends Component {
             y1: this.startY/ch,
             x2: this.currentX/cw,
             y2: this.currentY/ch,
+            penColor: this.state.penColor,
+            lineWidth: this.state.lineWidth
         };
         this.startX = this.currentX;
         this.startY = this.currentY;
@@ -90,10 +101,12 @@ class WhiteBoard extends Component {
     }
 
     // Starts the drawing process
-    startTrackMouse = () => {
-        this.startX = this.currentX;
-        this.startY = this.currentY;
-        this.drawing = setInterval(this.handleDraw, 20);
+    startTrackMouse = (e) => {
+        if(e.button === 0){
+            this.startX = this.currentX;
+            this.startY = this.currentY;
+            this.drawing = setInterval(this.handleDraw, 20);
+        }
     }
 
     // Stops the drawing process
@@ -101,18 +114,41 @@ class WhiteBoard extends Component {
         clearInterval(this.drawing);
     }
 
+    // Set Pen Color
+    setPenColor = (color) => {
+        console.log(color)
+        this.setState({
+            penColor: color
+        });
+    }
+
+    // Set Line Width
+    setLineWidth = (width) => {
+        this.setState({
+            lineWidth: width
+        });
+    }
+
+    clearCanvas = () => {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
     render() {
+        const penColor = this.state.penColor
         return (
-            <div className="whiteBoard" ref={(ele) => this.d = ele}>
-                <canvas 
-                    ref={(ele) => this.canvas = ele}
-                    onMouseDown={this.startTrackMouse}
-                    onMouseLeave={this.stopTrackMouse}
-                    onMouseUp={this.stopTrackMouse}
-                    onMouseMove={this.trackMouse}
-                > </canvas>
+            <div>
+                <div className="whiteBoard" ref={(ele) => this.d = ele}>
+                    <canvas 
+                        ref={(ele) => this.canvas = ele}
+                        onMouseDown={this.startTrackMouse}
+                        onMouseLeave={this.stopTrackMouse}
+                        onMouseUp={this.stopTrackMouse}
+                        onMouseMove={this.trackMouse}
+                        onContextMenu={(e) => {e.preventDefault()}}
+                    > </canvas>
+                </div>
+                <ToolBar penColor = { penColor } setPenColor = {this.setPenColor} setLineWidth = {this.setLineWidth} clearCanvas = {this.clearCanvas}/>
             </div>
-            
         )
     }
 }
