@@ -1,5 +1,5 @@
 const io = require('./index.js').io; 
-const { USER_CONNECTED, USER_DISCONNECTED, VERIFY_USER, LOGOUT, MESSAGE_SENT, MESSAGE_RECIEVED, LINEDRAWN, } = require('../Events.js');
+const { USER_CONNECTED, USER_DISCONNECTED, VERIFY_USER, LOGOUT, MESSAGE_SENT, MESSAGE_RECIEVED, LINEDRAWN, SCREENCLEAR, LOG } = require('../Events.js');
 //const { useCallback } = require('react');
 const create = require('../Factories.js');
 
@@ -55,12 +55,12 @@ module.exports = function(socket){
         console.log("User disconnected: ", user, "\nCurrent user list: ", GlobalChat);
     });
 
-    socket.on(LOGOUT, (user) => {
-        userList = removeUser(socket.user.name, userList);
+    // socket.on(LOGOUT, (user) => {
+    //     userList = removeUser(socket.user.name, userList);
 
 
-        console.log("User disconnected: ", user, "\nCurrent user list: ", userList);
-    });
+    //     console.log("User disconnected: ", user, "\nCurrent user list: ", userList);
+    // });
 
 
 
@@ -74,8 +74,17 @@ module.exports = function(socket){
     socket.on(LINEDRAWN, (ratio) => {
         io.emit(LINEDRAWN, ratio);
     });
-        // Emit line drawn
+
+    socket.on(SCREENCLEAR, (user) => {
+        io.emit(SCREENCLEAR)
+        let message = user.name + " has cleared the screen!"
+        sendMessage(message, server)
+    })
     
+
+    socket.on(LOG, (message) => {
+        console.log(message)
+    })
 }
 
 

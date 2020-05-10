@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ToolBar from './ToolBar.js';
-const { LINEDRAWN } = require("../Events.js")
+const { LINEDRAWN, SCREENCLEAR, LOG } = require("../Events.js")
 
 
 class WhiteBoard extends Component {
@@ -31,8 +31,12 @@ class WhiteBoard extends Component {
         
         const socket = this.props.socket
         socket.on(LINEDRAWN, this.drawLine)
-        
+
+        socket.on(SCREENCLEAR, () => {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        })
         window.addEventListener("resize", this.resizeCanvas, false)
+
     }
 
     // Canvas size needs to be updated
@@ -96,13 +100,24 @@ class WhiteBoard extends Component {
     // Track Mouse Movement
     trackMouse = (e) => {
         // Used nativeEvent because some mouse events don't return offset
-        this.currentX = e.nativeEvent.offsetX;
-        this.currentY = e.nativeEvent.offsetY;
+        // const socket = this.props.socket;
+        if(e.type === "touchmove"){
+            this.currentX = e.touches[0].pageX - e.touches[0].target.offsetLeft;
+            this.currentY = e.touches[0].pageY - e.touches[0].target.offsetTop;
+            // socket.emit(LOG, e.touches[0].pageX - e.touches[0].target.offsetLeft)
+            // socket.emit(LOG, e.touches[0].pageY - e.touches[0].target.offsetTop)
+        } else {
+            this.currentX = e.nativeEvent.offsetX;
+            this.currentY = e.nativeEvent.offsetY;
+        }
+        
     }
 
     // Starts the drawing process
     startTrackMouse = (e) => {
-        if(e.button === 0){
+        // const socket = this.props.socket;
+        // socket.emit(LOG, e.type)
+        if(e.button === 0 || e.type === "touchstart"){
             this.startX = this.currentX;
             this.startY = this.currentY;
             this.drawing = setInterval(this.handleDraw, 20);
@@ -130,7 +145,8 @@ class WhiteBoard extends Component {
     }
 
     clearCanvas = () => {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        const socket = this.props.socket;
+        socket.emit(SCREENCLEAR, this.props.user)
     }
 
     render() {
@@ -145,6 +161,11 @@ class WhiteBoard extends Component {
                         onMouseUp={this.stopTrackMouse}
                         onMouseMove={this.trackMouse}
                         onContextMenu={(e) => {e.preventDefault()}}
+
+                        onTouchStart={this.startTrackMouse}
+                        onTouchCancel={this.stopTrackMouse}
+                        onTouchEnd={this.stopTrackMouse}
+                        onTouchMove={this.trackMouse}
                     > </canvas>
                 </div>
                 <ToolBar penColor = { penColor } setPenColor = {this.setPenColor} setLineWidth = {this.setLineWidth} clearCanvas = {this.clearCanvas}/>

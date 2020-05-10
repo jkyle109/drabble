@@ -7,7 +7,7 @@ import NavBar from './NavBar.js';
 import WhiteBoard from './WhiteBoard.js';
 
 const socketUrl = "/"
-// const socketUrl = "http://localhost:3001"
+// const socketUrl = "http://192.168.0.13:3001"
 
 class Layout extends Component {
     constructor(props){
@@ -65,7 +65,7 @@ class Layout extends Component {
                 <NavBar />
                 {user ? 
                     <div>
-                        <WhiteBoard socket = {socket}/>
+                        <WhiteBoard socket = {socket} user = {user}/>
                         <ChatContainer socket = {socket} user = {user}/>
                     </div> :
                     <Login socket = {socket} setUser = {this.setUser}/>

@@ -14,7 +14,7 @@ class ToolBar extends Component {
     render() {
         const colorBoxes = colors.map(color => (
             <div
-                key={color.name}
+                key={color.hex}
                 className="colorBox" 
                 style={{backgroundColor: color.hex}}
                 onClick={() => this.props.setPenColor(color.hex)}
