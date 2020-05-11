@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import io from 'socket.io-client'
-import { USER_CONNECTED, USER_DISCONNECTED } from '../Events.js'
+import { USER_CONNECTED, USER_DISCONNECTED, USER_CHANGE } from '../Events.js'
 import Login from "./Login.js"
 import ChatContainer from './ChatContainer.js'
 import NavBar from './NavBar.js';
@@ -38,7 +38,7 @@ class Layout extends Component {
         })
         this.setState({socket: socket})
 
-        socket.on(USER_CONNECTED, (roomList) => {
+        socket.on(USER_CHANGE, (roomList) => {
             this.setState({
                 roomList: roomList
             })

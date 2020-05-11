@@ -1,5 +1,5 @@
 const io = require('./index.js').io; 
-const { USER_CONNECTED, USER_DISCONNECTED, VERIFY_USER, MESSAGE_SENT, MESSAGE_RECIEVED, LINEDRAWN, SCREENCLEAR, LOG } = require('../Events.js');
+const { USER_CONNECTED, USER_DISCONNECTED, VERIFY_USER, MESSAGE_SENT, MESSAGE_RECIEVED, LINEDRAWN, SCREENCLEAR, LOG, USER_CHANGE } = require('../Events.js');
 //const { useCallback } = require('react');
 const create = require('../Factories.js');
 
@@ -50,7 +50,7 @@ module.exports = function(socket){
         }
         chatList[roomCode].users = addUser(user, chatList[roomCode].users);
 
-        io.emit(USER_CONNECTED, chatList[roomCode].users)
+        io.emit(USER_CHANGE, chatList[roomCode].users)
 
 
         //GlobalChat.users = addUser(user, GlobalChat.users);
@@ -69,6 +69,8 @@ module.exports = function(socket){
         userList = removeUser(user, userList);
         // Todo: Make sure you don't regret this
         chatList[roomCode].users = removeUser(user, chatList[roomCode].users);
+
+        io.emit(USER_CHANGE, chatList[roomCode].users)
         
         // Chat User Disconnet Message
         let message = user.name + " has left!"
