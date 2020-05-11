@@ -6,8 +6,8 @@ import ChatContainer from './ChatContainer.js'
 import NavBar from './NavBar.js';
 import WhiteBoard from './WhiteBoard.js';
 
-// const socketUrl = "/"
-const socketUrl = "http://192.168.0.13:3001"
+const socketUrl = "/"
+// const socketUrl = "http://192.168.0.13:3001"
 
 class Layout extends Component {
     constructor(props){
