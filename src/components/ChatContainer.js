@@ -3,6 +3,7 @@ import MessageInput from './MessageInput.js'
 import { MESSAGE_SENT, MESSAGE_RECIEVED } from '../Events.js'
 import MessageBox from './MessageBox.js'
 import ServerMessage from './ServerMessage.js';
+import ChatNav from './ChatNav.js';
 
 class ChatContainer extends Component {
     constructor(props) {
@@ -28,7 +29,8 @@ class ChatContainer extends Component {
     sendMessage(message){
         const socket = this.props.socket;
         const user = this.props.user;
-        socket.emit(MESSAGE_SENT, message, user);
+        const roomCode = this.props.roomCode;
+        socket.emit(MESSAGE_SENT, message, user, roomCode);
         // console.log(MESSAGE_SENT, " : ", message);
     }
 
@@ -71,11 +73,12 @@ class ChatContainer extends Component {
 
         return (
             <div>
+                <ChatNav roomCode = {this.props.roomCode} roomList = {this.props.roomList}/>
                 <MessageInput
                     chat = {this.state}
                     sendMessage = {this.sendMessage}
                 />
-                <div className="messageBox" ref={(ele) => this.messageBox = ele}>
+                <div className="messageBlock" ref={(ele) => this.messageBox = ele}>
                     {messageBlock}
                 </div>
             </div>

@@ -1,29 +1,35 @@
 body{
-    background-color: rgb(49, 48, 48);
+    background-color: rgb(61, 60, 60);
 }
 
 /* Message box that scrolls with messages. */
-.messageBox{
+.messageBlock{
     position: absolute;
     right: 2px;
-    top: 40px;
+    top: 71px;
     bottom: 50px;
-    width: 298px;
+    width: 347px;
     overflow-y: auto;
     overflow-wrap: break-word;
-    border: 0.5px solid black;
-    background-color:rgb(22, 22, 22);
+    border: 1px solid black;
+    background-color:rgb(35, 35, 35);
     font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+/*  */
+.messageBox{
+    width: 100%;
+    /* margin-left: 10px; */
 }
 
 
 /* Username sending the message. Can Scale for titles later. */
-.username{
+.color{
     color: purple;
 }
 
 /* Message itself. */
-.message{
+.noColor{
     color: white;
 }
 
@@ -32,7 +38,8 @@ body{
     position: relative;
     color: white;
     text-align: center;
-    background-color: rgb(25, 9, 42);
+    background-color: rgb(46, 1, 46);
+    /* width: 347px; */
 }
 
 /* Bar between chat messages. */
@@ -47,15 +54,16 @@ body{
 /* The text box to sumbit the message. */
 .messageInput{
     position: absolute;
-    right: 51px;
+    right: 76px;
     bottom: 2px;
-    width: 244px;
-    height: 44px;
+    width: 263px;
+    height: 43px;
     padding-left: 5px;
+    padding-right: 5px;
     color: white;
     background-color:rgb(22, 22, 22);
     font-family: "Comic Sans MS", cursive, sans-serif;
-    border: 0.5px solid black;
+    border: 1px solid black;
     outline-color: purple;
 }
 
@@ -64,13 +72,35 @@ body{
     position: absolute;
     right: 2px;
     bottom: 2px;
-    width: 48px;
+    width: 73px;
     height: 47px;
     color: white;
     background-color:rgb(22, 22, 22);
     font-family: "Comic Sans MS", cursive, sans-serif;
-    border: 0.5px solid black;
+    border: 1px solid black;
     outline-color: purple;
+}
+
+/* Chat Nav Bar */
+.chatNav{
+    position: absolute;
+    right: 2px;
+    top: 40px;
+    height: 28px;
+    width: 337px;
+    border: 1px solid black;
+    background-color:rgb(22, 22, 22);
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: white;
+    font-size: 12px;
+    line-height: 28px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/*  */
+.chatNavRight{
+    float: right;
 }
 
 /* Login Form */
@@ -102,12 +132,12 @@ body{
 }
 
 /* User login  */
-.loginUser{
+.loginField{
     color: white;
     font-family: "Comic Sans MS", cursive, sans-serif;
     background-color:rgb(22, 22, 22);
     outline-color: purple;
-    border: 0.5px solid black;
+    border: 1px solid black;
     text-align: center;
     margin: 20px 0px;
     font-size: 26px;
@@ -120,7 +150,7 @@ body{
     align-self: right;
     color: white;
     font-family: "Comic Sans MS", cursive, sans-serif;
-    border: 0.5px solid black;
+    border: 1px solid black;
     background-color:rgb(22, 22, 22);
     font-size: 30px;
     outline-color: purple;
@@ -129,12 +159,17 @@ body{
 /* Nav Bar */
 .navBar{
     position: absolute;
-    height: 38px;
+    height: 35px;
+    top: 2px;
     left: 2px;
     right: 2px;
-    top: 0;
-    border: 0.5px solid black;
+    border: 1px solid black;
     background-color:rgb(22, 22, 22);
+    color: white;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    line-height: 35px;
+    padding-left: 5px;
+    
 }
 
 /* White Board */
@@ -143,8 +178,8 @@ body{
     top: 40px;
     bottom: 50px;
     left: 2px;
-    right: 302px;
-    border: 0.5px solid black;
+    right: 352px;
+    border: 1px solid black;
     background-color:white;
 
     /* Prevent accidental selection and draging */
@@ -162,10 +197,10 @@ body{
 .toolBar{
     position: absolute;
     bottom: 2px;
-    right: 302px;
-    height: 46px;
+    right: 352px;
+    height: 45px;
     left: 2px;
-    border: 0.5px solid black;
+    border: 1px solid black;
     background-color:rgb(22, 22, 22);
 
     display: flex;
@@ -179,9 +214,25 @@ body{
     height: 35px;
     margin-right: 15px;
     margin-left: 20px;
-    border: 0.5px solid white;
+    outline: none;
+    padding: 1px;
 }
 
+/* Weird mumbo jumbo to remove default style */
+input[type="color"] {
+    -webkit-appearance: none;
+    border: none;
+	width: 32px;
+	height: 32px;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 1px;
+}
+input[type="color"]::-webkit-color-swatch {
+	border: 1px;
+}
+
+/*  */
 .colorGrid{
     display: flex;
     flex-wrap: wrap;
@@ -198,7 +249,7 @@ body{
     height: 24px;
     margin-left: 5px;
     margin-right: 5px;
-    border: 0.5px solid white;
+    border: 1px solid white;
 }
 
 .colorClear{
@@ -209,7 +260,7 @@ body{
     color: rgb(22, 22, 22);
     background-color:white;
     font-family: "Comic Sans MS", cursive, sans-serif;
-    border: 0.5px solid black;
+    border: 1px solid black;
     outline-color: purple;
     text-align: center;
     line-height: 29px;

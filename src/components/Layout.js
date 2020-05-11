@@ -6,8 +6,8 @@ import ChatContainer from './ChatContainer.js'
 import NavBar from './NavBar.js';
 import WhiteBoard from './WhiteBoard.js';
 
-const socketUrl = "/"
-// const socketUrl = "http://192.168.0.13:3001"
+// const socketUrl = "/"
+const socketUrl = "http://192.168.0.13:3001"
 
 class Layout extends Component {
     constructor(props){
@@ -16,6 +16,8 @@ class Layout extends Component {
         this.state = {
             socket: null,
             user: null,
+            roomCode: null,
+            roomList: [],
         };
     }
 
@@ -27,14 +29,6 @@ class Layout extends Component {
         window.onbeforeunload = this.disconnect
     }
 
-    disconnect = () => {
-        const socket = this.state.socket;
-        if(this.state.user !== null){
-            socket.emit(USER_DISCONNECTED, (this.state.user))
-        }
-    }
-
-
     //Create a socket connection with server
     initSocket = () => {
         const socket = io(socketUrl)
@@ -43,30 +37,51 @@ class Layout extends Component {
             console.log("Connected")
         })
         this.setState({socket: socket})
+
+        socket.on(USER_CONNECTED, (roomList) => {
+            this.setState({
+                roomList: roomList
+            })
+        })
+    }
+
+
+    disconnect = () => {
+        const socket = this.state.socket;
+        if(this.state.user !== null){
+            socket.emit(USER_DISCONNECTED, this.state.user, this.state.roomCode)
+        }
     }
 
     //Set User
-    setUser = (user) => {
+    setUser = (user, roomCode) => {
         const socket = this.state.socket
+
+        if(roomCode === "" || roomCode === null){
+            roomCode = "Global-Chat";
+        }
         
-        socket.emit(USER_CONNECTED, user)
+        socket.emit(USER_CONNECTED, user, roomCode)
         console.log(USER_CONNECTED);
         this.setState({
-            user: user
+            user: user,
+            roomCode: roomCode
         })
     }
 
     render() {
         const user = this.state.user
         const socket = this.state.socket
+        const roomCode = this.state.roomCode
+        const roomList = this.state.roomList
         
         return (
             <div>
-                <NavBar />
+                <NavBar roomCode = {roomCode} />
                 {user ? 
                     <div>
-                        <WhiteBoard socket = {socket} user = {user}/>
-                        <ChatContainer socket = {socket} user = {user}/>
+                        <WhiteBoard socket = {socket} user = {user} roomCode = {roomCode}/>
+                        <ChatContainer socket = {socket} user = {user} roomCode = {roomCode} roomList = {roomList}/>
                     </div> :
                     <Login socket = {socket} setUser = {this.setUser}/>
                 }

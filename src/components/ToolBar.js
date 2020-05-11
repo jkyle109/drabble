@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 const colors = require("../colors.js")
-const sizes = [2,5,10,15];
+const sizes = [2,4,6,10,16];
 
 class ToolBar extends Component {
     constructor(props) {
@@ -22,18 +22,24 @@ class ToolBar extends Component {
         ))
 
         const pointCircles = sizes.map(size => (
-            <span className="outerDot" onClick={() => this.props.setLineWidth(size)}>
+            <span 
+                className="outerDot" onClick={() => this.props.setLineWidth(size)}
+                key={size}>
                 <span 
                     className="innerDot"
                     style={{width: size, height: size}}
-                    key={size}
                 />
             </span>
         ))
 
         return (
             <div className="toolBar">
-                <div className="currentColor" style={{backgroundColor: this.props.penColor}}/>
+                <input
+                    className="currentColor"
+                    type="color"
+                    value={this.props.penColor}
+                    onInput={(e) => { this.props.setPenColor(e.target.value)}}
+                ></input>
                 <div className="colorGrid">
                     {colorBoxes}
                 </div>

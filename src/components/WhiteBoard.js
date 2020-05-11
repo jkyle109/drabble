@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ToolBar from './ToolBar.js';
-const { LINEDRAWN, SCREENCLEAR, LOG } = require("../Events.js")
+const { LINEDRAWN, SCREENCLEAR } = require("../Events.js")
 
 
 class WhiteBoard extends Component {
@@ -80,6 +80,7 @@ class WhiteBoard extends Component {
 
     handleDraw = () => {
         const socket = this.props.socket;
+        const roomCode = this.props.roomCode;
 
         const cw = this.canvas.width;
         const ch = this.canvas.height;
@@ -94,7 +95,7 @@ class WhiteBoard extends Component {
         };
         this.startX = this.currentX;
         this.startY = this.currentY;
-        socket.emit(LINEDRAWN, ratio);
+        socket.emit(LINEDRAWN, ratio, roomCode);
     }
 
     // Track Mouse Movement
@@ -146,7 +147,8 @@ class WhiteBoard extends Component {
 
     clearCanvas = () => {
         const socket = this.props.socket;
-        socket.emit(SCREENCLEAR, this.props.user)
+        const roomCode = this.props.roomCode
+        socket.emit(SCREENCLEAR, this.props.user, roomCode)
     }
 
     render() {

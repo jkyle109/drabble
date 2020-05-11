@@ -12,7 +12,7 @@ class NavBar extends Component {
     render() {
         return (
             <div className="navBar">
-
+                Drabble
             </div>
         )
     }

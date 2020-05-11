@@ -14,12 +14,14 @@ class MessageBox extends Component {
         let highlight = this.props.message.includes("@"+this.props.user.name)
 
         return (
-        <div style={{backgroundColor: highlight ? "rgb(25, 9, 42)" : "none"}}>
+        <div
+            className="messageBox"
+            style={{backgroundColor: highlight ? "rgb(46, 1, 46)" : "none"}}>
                 {/* <hr className="messageBreak"/> */}
-                <span className="username">
+                <span className="color">
                     {this.props.sender.name}
                 </span>
-                <span className="message">
+                <span className="noColor">
                     {": " + this.props.message}
                 </span>
                 
