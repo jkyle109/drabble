@@ -56,10 +56,6 @@ class Layout extends Component {
     //Set User
     setUser = (user, roomCode) => {
         const socket = this.state.socket
-
-        if(roomCode === "" || roomCode === null){
-            roomCode = "Global-Chat";
-        }
         
         socket.emit(USER_CONNECTED, user, roomCode)
         console.log(USER_CONNECTED);

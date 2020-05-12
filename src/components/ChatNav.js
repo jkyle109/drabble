@@ -9,9 +9,16 @@ class ChatNav extends Component {
         }
     }
 
+    toggle = (ele) => {
+        ele.classList.toggle("down")
+    }
+
     render() {
 
         const userCount = Object.keys(this.props.roomList).length
+        const userList = Object.keys(this.props.roomList).map(user => (
+            <div key={user}>{user}</div>
+        ))
 
         return (
             <div className="chatNav">
@@ -23,6 +30,23 @@ class ChatNav extends Component {
                 <span className="chatNavRight">
                     <span className="color">Users: </span>
                     <span className="noColor">{userCount}</span>
+                    <div
+                        onClick={() => {
+                            this.toggle(this.viewerChev)
+                            this.toggle(this.viewerList)
+                        }}
+                        className="chevronBorder">
+                        <div>
+                            <i 
+                                className="fas fa-chevron-left rotate"
+                                ref={(ele) => {this.viewerChev = ele}}
+                            ></i>
+                        </div>
+                        <div className="userList" ref={(ele) => this.viewerList = ele}> 
+                            <div className="noColor">Current Room Users:</div>
+                            {userList}
+                            </div>
+                    </div>
                 </span>
             </div>
         )

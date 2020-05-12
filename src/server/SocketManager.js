@@ -26,8 +26,13 @@ module.exports = function(socket){
     // If a Verify_User is heard
     socket.on(VERIFY_USER, (name, roomCode, callback) => {
         console.log("Verifying User:", name)
+
+        console.log(roomCode)
+        if(!validString(roomCode)){
+            roomCode = "Global-Chat"
+        }
         // See is name is taken
-        if(isUser(name, userList)){
+        if(isUser(name, userList) || !validString(name)){
             callback({isUser: true, user: null});
             console.log("Username taken.")
         }
@@ -42,7 +47,7 @@ module.exports = function(socket){
     // Add new users
     socket.on(USER_CONNECTED, (user, roomCode) => {
         userList = addUser(user, userList);
-
+        
         socket.join(roomCode);
         if(!(roomCode in chatList)){
             const chat = create.chat({name: roomCode})
@@ -157,4 +162,13 @@ function sendMessage(message, sender, roomCode){
     chatList[roomCode].messages.push(message);
     //GlobalChat.messages.push(message);
     io.to(roomCode).emit(MESSAGE_RECIEVED, (message));
+}
+
+function validString(string){
+    
+    if(string.includes("  ") || string === "" || string[0] === " "){
+        return false
+    }
+
+    return true
 }

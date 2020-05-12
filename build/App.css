@@ -1,5 +1,6 @@
 body{
     background-color: rgb(61, 60, 60);
+    user-select: none;
 }
 
 /* Message box that scrolls with messages. */
@@ -14,6 +15,7 @@ body{
     border: 1px solid black;
     background-color:rgb(35, 35, 35);
     font-family: "Comic Sans MS", cursive, sans-serif;
+    user-select: text;
 }
 
 /*  */
@@ -79,6 +81,7 @@ body{
     font-family: "Comic Sans MS", cursive, sans-serif;
     border: 1px solid black;
     outline-color: purple;
+    cursor: pointer;
 }
 
 /* Chat Nav Bar */
@@ -96,6 +99,7 @@ body{
     line-height: 28px;
     padding-left: 5px;
     padding-right: 5px;
+    user-select: text;
 }
 
 /*  */
@@ -115,7 +119,10 @@ body{
     align-items: center;
     justify-content: center;
 }
-
+.loginForm *:focus{
+    outline: none;
+    border: 1px solid purple;
+}
 .loginForm>form{
     display: flex;
     flex-direction: column;
@@ -137,23 +144,26 @@ body{
     font-family: "Comic Sans MS", cursive, sans-serif;
     background-color:rgb(22, 22, 22);
     outline-color: purple;
-    border: 1px solid black;
+    border: 1px solid #bbbbbb;
     text-align: center;
     margin: 20px 0px;
     font-size: 26px;
     width: 200px;
     height: 50px;
+    border-radius: 5px;
 }
+
 
 /* Login Submit */
 .loginSubmit{
     align-self: right;
-    color: white;
+    color: #bbbbbb;
     font-family: "Comic Sans MS", cursive, sans-serif;
-    border: 1px solid black;
+    border: 1px solid white;
     background-color:rgb(22, 22, 22);
     font-size: 30px;
     outline-color: purple;
+    border-radius: 5px;
 }
 
 /* Nav Bar */
@@ -250,6 +260,11 @@ input[type="color"]::-webkit-color-swatch {
     margin-left: 5px;
     margin-right: 5px;
     border: 1px solid white;
+    transition: 0.25s;
+}
+.colorBox:hover{
+    transition: 0.25s;
+    border: 1px solid purple;
 }
 
 .colorClear{
@@ -257,14 +272,26 @@ input[type="color"]::-webkit-color-swatch {
     right: 20px;
     width: 50px;
     height: 29px;
-    color: rgb(22, 22, 22);
-    background-color:white;
+    color: white;
     font-family: "Comic Sans MS", cursive, sans-serif;
-    border: 1px solid black;
+    border: 1px solid #bbbbbb;
+    border-radius: 5px;
     outline-color: purple;
     text-align: center;
     line-height: 29px;
+    user-select: none;
+    transition: 0.25s;
+    cursor: pointer;
 }
+.colorClear:hover{
+    transition: 0.25s;
+    border: 1px solid purple;
+}
+.colorClear:active{
+    transition: 0.25s;
+    background-color: rgb(61, 60, 60);
+}
+
 
 .outerDot{
     height: 30px;
@@ -276,6 +303,12 @@ input[type="color"]::-webkit-color-swatch {
     justify-content: center;
     margin-left: 10px;
     margin-right: 10px;
+    transition: 0.25s;
+    border: 1px solid white;
+}
+.outerDot:hover{
+    transition: 0.25s;
+    border: 1px solid purple;
 }
 
 
@@ -284,6 +317,34 @@ input[type="color"]::-webkit-color-swatch {
     background-color: #000000;
     border-radius: 50%;
     display: flex;
+}
+
+
+/*  */
+.userList{
+    display: none;
+    position: absolute;
+    right: -12px;
+    top: 25px;
+    width: 345px;
+    height: 200px;
+    border: 2px solid black;
+    background-color: rgb(35, 35, 35);
+    color: purple;
+    overflow-y: auto;
+    overflow-wrap: break-word;
+    z-index: 1;
+}
+.userList>div{
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 20px;
+    font-size: 14px;
+}
+.userList>.noColor{
+    padding: 5px;
+    font-size: 14px;
+    line-height: 10px;
 }
 
 
@@ -301,5 +362,44 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 
+/* Icons */
 
+
+.chevronBorder{
+    position: relative;
+    display: inline-block;
+    border: 1px solid #bbbbbb;
+    border-radius: 5px;
+    margin-left:10px;
+    margin-right: 5px;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+.chevronBorder:hover{
+    transition: 0.25s;
+    border: 1px solid purple;
+}
+.chevronBorder:active{
+    transition: 0.25s;
+    background-color: rgb(61, 60, 60);
+}
+
+/* Animation */
+.rotate{
+    transition: all 0.2s linear;
+}
+
+.rotate.down{
+    transform: rotate(-90deg);
+}
+
+.down{
+    display: block;
+}
 /* Make a overall div for chat */

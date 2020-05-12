@@ -24,6 +24,7 @@ class ToolBar extends Component {
         const pointCircles = sizes.map(size => (
             <span 
                 className="outerDot" onClick={() => this.props.setLineWidth(size)}
+                style={{borderColor: size === this.props.lineWidth ? "purple" : ""}}
                 key={size}>
                 <span 
                     className="innerDot"
@@ -38,7 +39,7 @@ class ToolBar extends Component {
                     className="currentColor"
                     type="color"
                     value={this.props.penColor}
-                    onInput={(e) => { this.props.setPenColor(e.target.value)}}
+                    onChange={(e) => { this.props.setPenColor(e.target.value)}}
                 ></input>
                 <div className="colorGrid">
                     {colorBoxes}

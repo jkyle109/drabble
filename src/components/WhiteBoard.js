@@ -132,7 +132,6 @@ class WhiteBoard extends Component {
 
     // Set Pen Color
     setPenColor = (color) => {
-        console.log(color)
         this.setState({
             penColor: color
         });
@@ -153,6 +152,8 @@ class WhiteBoard extends Component {
 
     render() {
         const penColor = this.state.penColor
+        const lineWidth = this.state.lineWidth
+
         return (
             <div>
                 <div className="whiteBoard" ref={(ele) => this.d = ele}>
@@ -170,7 +171,7 @@ class WhiteBoard extends Component {
                         onTouchMove={this.trackMouse}
                     > </canvas>
                 </div>
-                <ToolBar penColor = { penColor } setPenColor = {this.setPenColor} setLineWidth = {this.setLineWidth} clearCanvas = {this.clearCanvas}/>
+                <ToolBar penColor = { penColor } setPenColor = {this.setPenColor} lineWidth = {lineWidth} setLineWidth = {this.setLineWidth} clearCanvas = {this.clearCanvas}/>
             </div>
         )
     }
