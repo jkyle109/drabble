@@ -55,7 +55,7 @@ module.exports = function(socket){
         }
         chatList[roomCode].users = addUser(user, chatList[roomCode].users);
 
-        io.emit(USER_CHANGE, chatList[roomCode].users)
+        io.to(roomCode).emit(USER_CHANGE, chatList[roomCode].users)
 
 
         //GlobalChat.users = addUser(user, GlobalChat.users);
@@ -75,7 +75,7 @@ module.exports = function(socket){
         // Todo: Make sure you don't regret this
         chatList[roomCode].users = removeUser(user, chatList[roomCode].users);
 
-        io.emit(USER_CHANGE, chatList[roomCode].users)
+        io.to(roomCode).emit(USER_CHANGE, chatList[roomCode].users)
         
         // Chat User Disconnet Message
         let message = user.name + " has left!"
