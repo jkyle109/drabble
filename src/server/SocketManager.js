@@ -5,7 +5,7 @@ const create = require('../Factories.js');
 const wordList = require('../wordList.js')
 
 // Round time
-let roundTime = 2400000
+let roundTime = 45000
 
 // Init User List
 let userList = {};
@@ -15,6 +15,7 @@ let chatList = {};
 
 // Server user
 const server = create.user({name: "server"});
+// const drabble = create.user({name: "drabble"})
 
 //
 let GlobalChat = create.chat({name: "Global-Chat"})
@@ -49,17 +50,20 @@ module.exports = function(socket){
     socket.on(USER_CONNECTED, (user, roomCode) => {
         let mirror = "  " + roomCode
         userList = addUser(user, userList);
-        
+        // Private room
+        let  chat = create.chat({name: user.socketId})
+        chatList[user.socketId] = chat;
+
         // Main room
         socket.join(roomCode);
         if(!(roomCode in chatList)){
-            const chat = create.chat({name: roomCode})
+            chat = create.chat({name: roomCode})
             chatList[roomCode] = chat;
         }
 
         // Mirror Room
         if(!(mirror in chatList)){
-            const chat = create.chat({name: mirror})
+            chat = create.chat({name: mirror})
             chatList[mirror] = chat;
         }
 
@@ -78,6 +82,11 @@ module.exports = function(socket){
         // Chat User Connect Message
         let message = user.name + " has joined!"
         sendMessage(message, server, roomCode)
+
+        sendMessage("Hi, Welcome to Drabble!", server, user.socketId)
+        sendMessage("Here are some commands to get you started:", server, user.socketId)
+        sendMessage("/start ==> Start Game", server, user.socketId)
+        sendMessage("/end ==> End Game", server, user.socketId)
     });
 
 
