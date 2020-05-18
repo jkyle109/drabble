@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ToolBar from './ToolBar.js';
-const { LINEDRAWN, SCREENCLEAR } = require("../Events.js")
+const { LINEDRAWN, SCREENCLEAR, GAME_START, GAME_END, ROUND_START, ROUND_END } = require("../Events.js")
 
 
 class WhiteBoard extends Component {
@@ -10,6 +10,7 @@ class WhiteBoard extends Component {
         this.state = {
             penColor: "#000000",
             lineWidth: 2,
+            main: true,
         }
     }
 
@@ -36,7 +37,35 @@ class WhiteBoard extends Component {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         })
         window.addEventListener("resize", this.resizeCanvas, false)
+        
+        // Socket on game start?
+        socket.on(GAME_START, () => {
+            this.setState({
+                main: false
+            },this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height))
+        })
 
+        socket.on(ROUND_START, (words, leader) => {
+            const username = this.props.user.name
+            if(username === leader.name){
+                this.setState({
+                    main: true
+                })
+            }
+        });
+
+        socket.on(ROUND_END, () => {
+            this.setState({
+                main: false,
+            })
+        })
+
+        // Socket on game end
+        socket.on(GAME_END, () => {
+            this.setState({
+                main: true
+            })
+        })
     }
 
     // Canvas size needs to be updated
@@ -102,6 +131,10 @@ class WhiteBoard extends Component {
     trackMouse = (e) => {
         // Used nativeEvent because some mouse events don't return offset
         // const socket = this.props.socket;
+        if(!this.state.main){
+            return;
+        }
+        
         if(e.type === "touchmove"){
             this.currentX = e.touches[0].pageX - e.touches[0].target.offsetLeft;
             this.currentY = e.touches[0].pageY - e.touches[0].target.offsetTop;
@@ -118,6 +151,10 @@ class WhiteBoard extends Component {
     startTrackMouse = (e) => {
         // const socket = this.props.socket;
         // socket.emit(LOG, e.type)
+        if(!this.state.main){
+            return;
+        }
+
         if(e.button === 0 || e.type === "touchstart"){
             this.startX = this.currentX;
             this.startY = this.currentY;
@@ -145,14 +182,19 @@ class WhiteBoard extends Component {
     }
 
     clearCanvas = () => {
+        if(!this.state.main){
+            return;
+        }
+        
         const socket = this.props.socket;
         const roomCode = this.props.roomCode
         socket.emit(SCREENCLEAR, this.props.user, roomCode)
     }
 
     render() {
-        const penColor = this.state.penColor
-        const lineWidth = this.state.lineWidth
+        const penColor = this.state.penColor;
+        const lineWidth = this.state.lineWidth;
+        const main = this.state.main;
 
         return (
             <div>
@@ -171,7 +213,13 @@ class WhiteBoard extends Component {
                         onTouchMove={this.trackMouse}
                     > </canvas>
                 </div>
-                <ToolBar penColor = { penColor } setPenColor = {this.setPenColor} lineWidth = {lineWidth} setLineWidth = {this.setLineWidth} clearCanvas = {this.clearCanvas}/>
+                <ToolBar 
+                    penColor = {penColor} 
+                    setPenColor = {this.setPenColor} 
+                    lineWidth = {lineWidth} 
+                    setLineWidth = {this.setLineWidth} 
+                    clearCanvas = {this.clearCanvas}
+                    main = {main}/>
             </div>
         )
     }

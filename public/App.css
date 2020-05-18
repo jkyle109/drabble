@@ -162,7 +162,6 @@ body{
     border: 1px solid white;
     background-color:rgb(22, 22, 22);
     font-size: 30px;
-    outline-color: purple;
     border-radius: 5px;
 }
 
@@ -403,3 +402,52 @@ input[type="color"]::-webkit-color-swatch {
     display: block;
 }
 /* Make a overall div for chat */
+
+.selectWord{
+    display: flex;
+    position: absolute;
+    top: 40px;
+    bottom: 50px;
+    left: 2px;
+    right: 352px;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.884);
+    justify-content: center;
+}
+
+.wordOption{
+    background-color: black;
+    margin: 20px;
+    color: white;
+    height: 25px;
+    line-height: 20px;
+    border-radius: 20px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    size: 20px;
+    position: relative;
+    align-self: center;
+    z-index: 2;
+    outline: none;
+    border: 1px solid white;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+}
+.wordOption:hover{
+    border: 1px solid purple;
+}
+
+.Word{
+    display: block;
+    position: absolute;
+    top: 45px;
+    left: 202px;
+    right: 552px;
+    z-index: 3;
+    background-color: #000000;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    margin: 0px;
+    border-radius: 30px;
+}

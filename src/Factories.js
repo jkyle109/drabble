@@ -1,9 +1,10 @@
 const { v4: uuidv4 } = require('uuid');
 
 //Create User
-const user = ({name = ""} = {}) => ({
+const user = ({name = "", socketId= ""} = {}) => ({
     id: uuidv4(),
-    name
+    name,
+    socketId,
 });
 
 
@@ -22,7 +23,10 @@ const chat = ({messages = [], name = "New Chat", users = []} = {}) => ({
     name,
     messages,
     users,
-    typingUsers: []
+    gameWord: "",
+    visableWord: "",
+    userQueue: [],
+    inGame: false
 });
 
 
